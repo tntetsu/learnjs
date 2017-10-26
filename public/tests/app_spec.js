@@ -21,4 +21,17 @@ describe('LearnJS', ()=> {
             expect(view.text()).toEqual('Problem #1 Coming soon!');
         });
     });
+
+    it('invokes the router when loaded', () => {
+        spyOn(learnjs, 'showView');
+        learnjs.appOnReady();
+        expect(learnjs.showView).toHaveBeenCalledWith(window.location.hash);
+    });
+
+    it('subscribes to the hash change event', () => {
+        learnjs.appOnReady();
+        spyOn(learnjs, 'showView');
+        $(window).trigger('hashchange');
+        expect(learnjs.showView).toHaveBeenCalledWith(window.location.hash);
+    });
 });
